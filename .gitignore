@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+.pnp.*
+
+# Next.js and build output
+.next/
+out/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# Secrets and local environment (keep the shared template)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Logs and local tooling
+*.log
+.vercel/
+.npm/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
