@@ -1,7 +1,7 @@
 # Suma
 
 Andriaus ir Ramūno kalkuliatorius, sukurtas naudojant Next.js, React ir TypeScript.
-Pirmoji versija sudeda du skaičius. Duomenų bazės ir API raktų nereikia.
+Kalkuliatorius sudeda arba atima du skaičius. Duomenų bazės ir API raktų nereikia.
 
 ## Paleidimas
 
@@ -40,7 +40,9 @@ npm start             # paleidimas po surinkimo
 
 ## Kaip naudotis
 
-Įveskite du skaičius ir spauskite „Sudėti skaičius“ arba Enter.
+Įveskite du skaičius, pasirinkite „Sudėtis“ arba „Atimtis“ ir spauskite
+„Sudėti skaičius“ / „Atimti skaičius“ arba Enter. Pagal nutylėjimą pasirinkta sudėtis.
+Atimties atveju iš pirmo skaičiaus atimamas antras.
 Palaikomi neigiami skaičiai, kablelis ir taškas trupmenoms.
 „Išvalyti laukus“ išvalo įvestį ir rezultatą.
 Skaičiavimai vyksta naršyklėje, niekur nesiunčiami ir nesaugomi.

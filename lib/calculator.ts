@@ -23,3 +23,19 @@ export function add(first: string, second: string): Calculation {
   // Remove common floating-point display noise, such as 0.1 + 0.2.
   return { ok: true, value: Number(sum.toPrecision(15)) };
 }
+
+export function subtract(first: string, second: string): Calculation {
+  if (!first.trim() || !second.trim()) {
+    return { ok: false, error: "Įveskite abu skaičius." };
+  }
+  const a = parseNumber(first);
+  const b = parseNumber(second);
+  if (a === null || b === null) {
+    return { ok: false, error: "Įveskite tinkamus skaičius, pavyzdžiui, -5 arba 2,5." };
+  }
+  const difference = a - b;
+  if (!Number.isFinite(difference)) {
+    return { ok: false, error: "Rezultatas per didelis. Įveskite mažesnius skaičius." };
+  }
+  return { ok: true, value: Number(difference.toPrecision(15)) };
+}
