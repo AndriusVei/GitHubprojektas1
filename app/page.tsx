@@ -43,27 +43,34 @@ export default function Home() {
     <div className="shell">
       <header className="header">
         <a className="brand" href="/" aria-label="Suma — pradžia"><span className="brand-icon">+</span>suma<span className="brand-dot">.</span></a>
-        <span className="version"><span />Pirmoji versija</span>
+        <span className="version"><span />Mažiau pastangų. Daugiau aiškumo.</span>
       </header>
 
       <main>
         <div className="intro">
-          <span className="eyebrow">MAŽIAU PASTANGŲ. DAUGIAU AIŠKUMO.</span>
-          <h1>Viskas prasideda<br />nuo <span>paprastos sumos.</span></h1>
-          <p>Du skaičiai, vienas atsakymas.<br className="mobile-break" /> Visa kita palikite mums.</p>
+          <span className="eyebrow"><span /> TAVO KASDIENIAMS SKAIČIAMS</span>
+          <h1>Maži veiksmai.<br /><span>Didelis aiškumas.</span></h1>
+          <p>Sudėk, atimk, daugink ar dalyk.<br />Du skaičiai ir atsakymas — be jokių rūpesčių.</p>
+          <div className="symbol-art" aria-hidden="true">
+            <span className="art-plus">+</span><span className="art-minus">−</span>
+            <span className="art-times">×</span><span className="art-divide">÷</span>
+          </div>
+          <div className="intro-note"><span>01 — 04</span> Keturi veiksmai. Viena vieta.</div>
         </div>
 
-        <section className="calculator" aria-labelledby="calculator-title">
+        <section className="calculator" data-operation={operation} aria-labelledby="calculator-title">
+          <div className="window-bar"><span className="window-dots" aria-hidden="true"><i /><i /><i /></span><span>suma / kalkuliatorius</span><span aria-hidden="true">↗</span></div>
+          <div className="calculator-body">
           <div className="card-heading">
             <div><span className="section-label">KALKULIATORIUS</span><h2 id="calculator-title">{selectedOperation.title}</h2></div>
             <span className="operation">{symbol}<span>{selectedOperation.label}</span></span>
           </div>
 
           <div className="operation-selector" role="group" aria-label="Skaičiavimo veiksmas">
-            <button type="button" aria-pressed={operation === "add"} onClick={() => selectOperation("add")}>+ Sudėtis</button>
-            <button type="button" aria-pressed={operation === "subtract"} onClick={() => selectOperation("subtract")}>− Atimtis</button>
-            <button type="button" aria-pressed={operation === "multiply"} onClick={() => selectOperation("multiply")}>× Daugyba</button>
-            <button type="button" aria-pressed={operation === "divide"} onClick={() => selectOperation("divide")}>÷ Dalyba</button>
+            <button type="button" data-operation="add" aria-pressed={operation === "add"} onClick={() => selectOperation("add")}><span aria-hidden="true">+</span>Sudėtis</button>
+            <button type="button" data-operation="subtract" aria-pressed={operation === "subtract"} onClick={() => selectOperation("subtract")}><span aria-hidden="true">−</span>Atimtis</button>
+            <button type="button" data-operation="multiply" aria-pressed={operation === "multiply"} onClick={() => selectOperation("multiply")}><span aria-hidden="true">×</span>Daugyba</button>
+            <button type="button" data-operation="divide" aria-pressed={operation === "divide"} onClick={() => selectOperation("divide")}><span aria-hidden="true">÷</span>Dalyba</button>
             <button type="button" aria-pressed={operation === "percentage"} onClick={() => selectOperation("percentage")}>% Procentai</button>
           </div>
 
@@ -82,11 +89,12 @@ export default function Home() {
             </div>
             <button className="reset" type="button" onClick={reset}><span aria-hidden="true">↺</span> Išvalyti laukus</button>
           </form>
+          <p className="privacy"><span aria-hidden="true">◈</span> Skaičiavimai lieka tik tavo naršyklėje.</p>
+          </div>
         </section>
 
-        <p className="privacy"><span aria-hidden="true">◈</span> Skaičiavimai vyksta jūsų naršyklėje.</p>
       </main>
-      <footer><span>Sukurta paprastumui.</span><span>Andrius & Ramūnas <span className="footer-plus">+</span></span></footer>
+      <footer><span>Paprastumas visada susideda.</span><span>Andrius & Ramūnas <span className="footer-plus">+</span></span></footer>
     </div>
   );
 }
