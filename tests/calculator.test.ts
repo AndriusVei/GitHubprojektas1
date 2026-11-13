@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { add, subtract } from "../lib/calculator.ts";
+import { add, subtract, multiply } from "../lib/calculator.ts";
 
 test("adds whole, negative and decimal numbers", () => {
   for (const [a, b, expected] of [["2", "3", 5], ["-8", "3", -5], ["0", "0", 0], [" 1,5 ", "2.5", 4], ["0.1", "0.2", 0.3]] as const) {
@@ -28,4 +28,18 @@ test("subtraction rejects invalid inputs and overflow", () => {
   }
   const large = "1" + "0".repeat(308);
   assert.equal(subtract(large, `-${large}`).ok, false);
+});
+
+test("multiplies whole, negative and decimal numbers, including zero", () => {
+  for (const [a, b, expected] of [["6", "7", 42], ["-3", "4", -12], ["-3", "-4", 12], ["0", "9", 0], ["9", "0", 0], [" 1,5 ", "2.5", 3.75], ["0.1", "0.2", 0.02]] as const) {
+    assert.deepEqual(multiply(a, b), { ok: true, value: expected });
+  }
+});
+
+test("multiplication rejects invalid inputs and overflow", () => {
+  for (const [a, b] of [["", "1"], ["1", " "], ["abc", "2"], ["1", "1,2,3"], ["0x10", "2"], ["Infinity", "2"], ["9".repeat(310), "1"]]) {
+    assert.equal(multiply(a, b).ok, false);
+  }
+  const large = "1" + "0".repeat(308);
+  assert.equal(multiply(large, "2").ok, false);
 });

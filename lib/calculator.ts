@@ -39,3 +39,19 @@ export function subtract(first: string, second: string): Calculation {
   }
   return { ok: true, value: Number(difference.toPrecision(15)) };
 }
+
+export function multiply(first: string, second: string): Calculation {
+  if (!first.trim() || !second.trim()) {
+    return { ok: false, error: "Įveskite abu skaičius." };
+  }
+  const a = parseNumber(first);
+  const b = parseNumber(second);
+  if (a === null || b === null) {
+    return { ok: false, error: "Įveskite tinkamus skaičius, pavyzdžiui, -5 arba 2,5." };
+  }
+  const product = a * b;
+  if (!Number.isFinite(product)) {
+    return { ok: false, error: "Rezultatas per didelis. Įveskite mažesnius skaičius." };
+  }
+  return { ok: true, value: Number(product.toPrecision(15)) };
+}
