@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { add, subtract, divide, type Calculation } from "../lib/calculator";
+import { add, subtract, divide, multiply, type Calculation } from "../lib/calculator";
 
 const formatter = new Intl.NumberFormat("lt-LT", { maximumSignificantDigits: 15 });
 
 const operations = {
   add: { calculate: add, symbol: "+", title: "Sudėkime", label: "Sumavimas", action: "Sudėti skaičius" },
   subtract: { calculate: subtract, symbol: "−", title: "Atimkime", label: "Atimtis", action: "Atimti skaičius" },
+  multiply: { calculate: multiply, symbol: "×", title: "Dauginkime", label: "Daugyba", action: "Dauginti skaičius" },
   divide: { calculate: divide, symbol: "÷", title: "Padalykime", label: "Dalyba", action: "Padalyti skaičius" },
 };
 
@@ -60,6 +61,7 @@ export default function Home() {
           <div className="operation-selector" role="group" aria-label="Skaičiavimo veiksmas">
             <button type="button" aria-pressed={operation === "add"} onClick={() => selectOperation("add")}>+ Sudėtis</button>
             <button type="button" aria-pressed={operation === "subtract"} onClick={() => selectOperation("subtract")}>− Atimtis</button>
+            <button type="button" aria-pressed={operation === "multiply"} onClick={() => selectOperation("multiply")}>× Daugyba</button>
             <button type="button" aria-pressed={operation === "divide"} onClick={() => selectOperation("divide")}>÷ Dalyba</button>
           </div>
 
