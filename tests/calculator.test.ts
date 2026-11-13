@@ -1,6 +1,22 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { add, subtract, divide, multiply } from "../lib/calculator.ts";
+import { add, subtract, divide, multiply, percentage } from "../lib/calculator.ts";
+
+test("calculates a percentage of the second number", () => {
+  for (const [rate, base, expected] of [["10", "200", 20], ["200", "10", 20], [" 12,5 ", "80", 10], ["0.1", "0.2", 0.0002], ["100", "35", 35], ["150", "20", 30], ["0", "200", 0], ["10", "0", 0], ["-10", "200", -20], ["10", "-200", -20]] as const) {
+    assert.deepEqual(percentage(rate, base), { ok: true, value: expected });
+  }
+  const large = "1" + "0".repeat(308);
+  assert.deepEqual(percentage("100", large), { ok: true, value: 1e308 });
+});
+
+test("percentages reject invalid inputs and overflow", () => {
+  for (const [rate, base] of [["", "200"], ["10", " "], ["abc", "2"], ["10%", "200"], ["1", "1,2,3"], ["Infinity", "2"], ["9".repeat(310), "1"]]) {
+    assert.equal(percentage(rate, base).ok, false);
+  }
+  const large = "1" + "0".repeat(308);
+  assert.equal(percentage("200", large).ok, false);
+});
 
 test("adds whole, negative and decimal numbers", () => {
   for (const [a, b, expected] of [["2", "3", 5], ["-8", "3", -5], ["0", "0", 0], [" 1,5 ", "2.5", 4], ["0.1", "0.2", 0.3]] as const) {

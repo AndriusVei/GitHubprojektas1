@@ -7,6 +7,24 @@ function parseNumber(input: string): number | null {
   return Number.isFinite(value) ? value : null;
 }
 
+export function percentage(first: string, second: string): Calculation {
+  if (!first.trim() || !second.trim()) {
+    return { ok: false, error: "Įveskite abu skaičius." };
+  }
+  const rate = parseNumber(first);
+  const base = parseNumber(second);
+  if (rate === null || base === null) {
+    return { ok: false, error: "Įveskite tinkamus skaičius, pavyzdžiui, -5 arba 2,5." };
+  }
+  const product = rate * base;
+  // Divide after multiplication when possible to preserve very small rates.
+  const value = Number.isFinite(product) ? product / 100 : (rate / 100) * base;
+  if (!Number.isFinite(value)) {
+    return { ok: false, error: "Rezultatas per didelis. Įveskite mažesnius skaičius." };
+  }
+  return { ok: true, value: Number(value.toPrecision(15)) };
+}
+
 export function add(first: string, second: string): Calculation {
   if (!first.trim() || !second.trim()) {
     return { ok: false, error: "Įveskite abu skaičius." };
