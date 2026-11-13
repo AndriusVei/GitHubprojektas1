@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Suma — paprastas kalkuliatorius",
-  description: "Sudėkite, atimkite, dauginkite ir dalykite. Keturi veiksmai moderniame, paprastame kalkuliatoriuje.",
+  description: "Sudėkite, atimkite, dauginkite, dalykite ir skaičiuokite procentus moderniame, paprastame kalkuliatoriuje.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

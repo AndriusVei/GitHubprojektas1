@@ -50,12 +50,12 @@ export default function Home() {
         <div className="intro">
           <span className="eyebrow"><span /> TAVO KASDIENIAMS SKAIČIAMS</span>
           <h1>Maži veiksmai.<br /><span>Didelis aiškumas.</span></h1>
-          <p>Sudėk, atimk, daugink ar dalyk.<br />Du skaičiai ir atsakymas — be jokių rūpesčių.</p>
+          <p>Sudėk, atimk, daugink, dalyk ar skaičiuok procentus.<br />Du skaičiai ir atsakymas — be jokių rūpesčių.</p>
           <div className="symbol-art" aria-hidden="true">
             <span className="art-plus">+</span><span className="art-minus">−</span>
             <span className="art-times">×</span><span className="art-divide">÷</span>
           </div>
-          <div className="intro-note"><span>01 — 04</span> Keturi veiksmai. Viena vieta.</div>
+          <div className="intro-note"><span>01 — 05</span> Visi veiksmai. Viena vieta.</div>
         </div>
 
         <section className="calculator" data-operation={operation} aria-labelledby="calculator-title">
@@ -71,7 +71,7 @@ export default function Home() {
             <button type="button" data-operation="subtract" aria-pressed={operation === "subtract"} onClick={() => selectOperation("subtract")}><span aria-hidden="true">−</span>Atimtis</button>
             <button type="button" data-operation="multiply" aria-pressed={operation === "multiply"} onClick={() => selectOperation("multiply")}><span aria-hidden="true">×</span>Daugyba</button>
             <button type="button" data-operation="divide" aria-pressed={operation === "divide"} onClick={() => selectOperation("divide")}><span aria-hidden="true">÷</span>Dalyba</button>
-            <button type="button" aria-pressed={operation === "percentage"} onClick={() => selectOperation("percentage")}>% Procentai</button>
+            <button type="button" data-operation="percentage" aria-pressed={operation === "percentage"} onClick={() => selectOperation("percentage")}><span aria-hidden="true">%</span>Procentai</button>
           </div>
 
           <form onSubmit={calculate} noValidate>
