@@ -1,25 +1,34 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { add, subtract, type Calculation } from "../lib/calculator";
+import { add, subtract, divide, type Calculation } from "../lib/calculator";
 
 const formatter = new Intl.NumberFormat("lt-LT", { maximumSignificantDigits: 15 });
+
+const operations = {
+  add: { calculate: add, symbol: "+", title: "Sudėkime", label: "Sumavimas", action: "Sudėti skaičius" },
+  subtract: { calculate: subtract, symbol: "−", title: "Atimkime", label: "Atimtis", action: "Atimti skaičius" },
+  divide: { calculate: divide, symbol: "÷", title: "Padalykime", label: "Dalyba", action: "Padalyti skaičius" },
+};
+
+type Operation = keyof typeof operations;
 
 export default function Home() {
   const [first, setFirst] = useState("");
   const [second, setSecond] = useState("");
   const [result, setResult] = useState<Calculation | null>(null);
-  const [operation, setOperation] = useState<"add" | "subtract">("add");
-  const symbol = operation === "add" ? "+" : "−";
+  const [operation, setOperation] = useState<Operation>("add");
+  const selectedOperation = operations[operation];
+  const symbol = selectedOperation.symbol;
 
-  function selectOperation(value: "add" | "subtract") {
+  function selectOperation(value: Operation) {
     setOperation(value);
     setResult(null);
   }
 
   function calculate(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setResult(operation === "add" ? add(first, second) : subtract(first, second));
+    setResult(selectedOperation.calculate(first, second));
   }
 
   function reset() {
@@ -44,13 +53,14 @@ export default function Home() {
 
         <section className="calculator" aria-labelledby="calculator-title">
           <div className="card-heading">
-            <div><span className="section-label">KALKULIATORIUS</span><h2 id="calculator-title">{operation === "add" ? "Sudėkime" : "Atimkime"}</h2></div>
-            <span className="operation">{symbol}<span>{operation === "add" ? "Sumavimas" : "Atimtis"}</span></span>
+            <div><span className="section-label">KALKULIATORIUS</span><h2 id="calculator-title">{selectedOperation.title}</h2></div>
+            <span className="operation">{symbol}<span>{selectedOperation.label}</span></span>
           </div>
 
           <div className="operation-selector" role="group" aria-label="Skaičiavimo veiksmas">
             <button type="button" aria-pressed={operation === "add"} onClick={() => selectOperation("add")}>+ Sudėtis</button>
             <button type="button" aria-pressed={operation === "subtract"} onClick={() => selectOperation("subtract")}>− Atimtis</button>
+            <button type="button" aria-pressed={operation === "divide"} onClick={() => selectOperation("divide")}>÷ Dalyba</button>
           </div>
 
           <form onSubmit={calculate} noValidate>
@@ -60,7 +70,7 @@ export default function Home() {
               <div className="field"><label htmlFor="second">Antras skaičius</label><input id="second" type="text" inputMode="decimal" autoComplete="off" placeholder="pvz., 7,5" value={second} aria-invalid={result?.ok === false} aria-describedby={result?.ok === false ? "calculation-error" : "number-hint"} onChange={event => { setSecond(event.target.value); setResult(null); }} /></div>
             </div>
             <p className="hint" id="number-hint">Tinka ir neigiami skaičiai. Trupmenoms naudokite kablelį arba tašką.</p>
-            <button className="submit" type="submit">{operation === "add" ? "Sudėti skaičius" : "Atimti skaičius"} <span aria-hidden="true">↗</span></button>
+            <button className="submit" type="submit">{selectedOperation.action} <span aria-hidden="true">↗</span></button>
 
             <div className={`result ${result?.ok ? "calculated" : ""}`} aria-live="polite" aria-atomic="true">
               <span className="section-label">REZULTATAS</span>
