@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
-import { add, subtract, divide, multiply, percentage, type Calculation } from "../lib/calculator";
+import { useState } from "react";
+import { add, subtract, divide, multiply, percentage } from "../lib/calculator";
 
 const formatter = new Intl.NumberFormat("lt-LT", { maximumSignificantDigits: 15 });
 
@@ -18,25 +18,20 @@ type Operation = keyof typeof operations;
 export default function Home() {
   const [first, setFirst] = useState("");
   const [second, setSecond] = useState("");
-  const [result, setResult] = useState<Calculation | null>(null);
   const [operation, setOperation] = useState<Operation>("add");
   const selectedOperation = operations[operation];
   const symbol = selectedOperation.symbol;
+  const result = first.trim() && second.trim()
+    ? selectedOperation.calculate(first, second)
+    : null;
 
   function selectOperation(value: Operation) {
     setOperation(value);
-    setResult(null);
-  }
-
-  function calculate(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setResult(selectedOperation.calculate(first, second));
   }
 
   function reset() {
     setFirst("");
     setSecond("");
-    setResult(null);
   }
 
   return (
@@ -74,14 +69,13 @@ export default function Home() {
             <button type="button" aria-pressed={operation === "percentage"} onClick={() => selectOperation("percentage")}>% Procentai</button>
           </div>
 
-          <form onSubmit={calculate} noValidate>
+          <form onSubmit={event => event.preventDefault()} noValidate>
             <div className="inputs">
-              <div className="field"><label htmlFor="first">{operation === "percentage" ? "Procentai (%)" : "Pirmas skaičius"}</label><input id="first" type="text" inputMode="decimal" autoComplete="off" placeholder="pvz., 12,5" value={first} aria-invalid={result?.ok === false} aria-describedby={result?.ok === false ? "calculation-error" : "number-hint"} onChange={event => { setFirst(event.target.value); setResult(null); }} /></div>
+              <div className="field"><label htmlFor="first">{operation === "percentage" ? "Procentai (%)" : "Pirmas skaičius"}</label><input id="first" type="text" inputMode="decimal" autoComplete="off" placeholder="pvz., 12,5" value={first} aria-invalid={result?.ok === false} aria-describedby={result?.ok === false ? "calculation-error" : "number-hint"} onChange={event => setFirst(event.target.value)} /></div>
               <span className="plus" aria-hidden="true">{symbol}</span>
-              <div className="field"><label htmlFor="second">{operation === "percentage" ? "Nuo skaičiaus" : "Antras skaičius"}</label><input id="second" type="text" inputMode="decimal" autoComplete="off" placeholder="pvz., 7,5" value={second} aria-invalid={result?.ok === false} aria-describedby={result?.ok === false ? "calculation-error" : "number-hint"} onChange={event => { setSecond(event.target.value); setResult(null); }} /></div>
+              <div className="field"><label htmlFor="second">{operation === "percentage" ? "Nuo skaičiaus" : "Antras skaičius"}</label><input id="second" type="text" inputMode="decimal" autoComplete="off" placeholder="pvz., 7,5" value={second} aria-invalid={result?.ok === false} aria-describedby={result?.ok === false ? "calculation-error" : "number-hint"} onChange={event => setSecond(event.target.value)} /></div>
             </div>
             <p className="hint" id="number-hint">{operation === "percentage" ? "Pavyzdžiui, 10 % nuo 200 = 20. Trupmenoms naudokite kablelį arba tašką." : "Tinka ir neigiami skaičiai. Trupmenoms naudokite kablelį arba tašką."}</p>
-            <button className="submit" type="submit">{selectedOperation.action} <span aria-hidden="true">↗</span></button>
 
             <div className={`result ${result?.ok ? "calculated" : ""}`} aria-live="polite" aria-atomic="true">
               <span className="section-label">REZULTATAS</span>
