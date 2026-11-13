@@ -40,8 +40,9 @@ npm start             # paleidimas po surinkimo
 
 ## Kaip naudotis
 
-Įveskite du skaičius, pasirinkite „Sudėtis“, „Atimtis“, „Daugyba“ arba „Dalyba“ ir spauskite
-„Sudėti skaičius“ / „Atimti skaičius“ / „Dauginti skaičius“ / „Padalyti skaičius“ arba Enter. Pagal nutylėjimą pasirinkta sudėtis.
+Pasirinkite „Sudėtis“, „Atimtis“, „Daugyba“, „Dalyba“ arba „Procentai“ ir įveskite du skaičius.
+Rezultatas atsinaujina automatiškai keičiant bet kurį skaičių arba veiksmą.
+Kol bent vienas laukas tuščias, rezultatas nerodomas. Pagal nutylėjimą pasirinkta sudėtis.
 Atimties atveju iš pirmo skaičiaus atimamas antras.
 Dalybos atveju pirmas skaičius dalijamas iš antro. Dalyti iš nulio negalima.
 Palaikomi neigiami skaičiai, kablelis ir taškas trupmenoms.
